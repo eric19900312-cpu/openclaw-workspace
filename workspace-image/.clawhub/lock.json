@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "skills": {
+    "gemini-image-simple": {
+      "version": "1.1.0",
+      "installedAt": 1775293976067
+    }
+  }
+}

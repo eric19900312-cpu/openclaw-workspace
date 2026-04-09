@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": {
+    "json-canvas": {
+      "version": "1.0.0",
+      "installedAt": 1774931695741
+    },
+    "canvas": {
+      "version": "1.0.0",
+      "installedAt": 1774931709620
+    }
+  }
+}

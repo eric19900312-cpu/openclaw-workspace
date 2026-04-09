@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": {
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1775292432752
+    },
+    "customs-trade-compliance": {
+      "version": "1.0.0",
+      "installedAt": 1775302503245
+    }
+  }
+}

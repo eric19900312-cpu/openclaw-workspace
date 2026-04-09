@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1774851151161
+    },
+    "video-frames": {
+      "version": "1.0.0",
+      "installedAt": 1774851409153
+    },
+    "agentsmail": {
+      "version": "0.4.6",
+      "installedAt": 1774853877041
+    },
+    "agent-browser-tool": {
+      "version": "1.0.0",
+      "installedAt": 1774853926457
+    },
+    "rupert-data-analysis": {
+      "version": "1.0.0",
+      "installedAt": 1775291482149
+    }
+  }
+}

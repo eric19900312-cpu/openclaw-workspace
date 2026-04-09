@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "kol": {
+      "version": "0.1.0",
+      "installedAt": 1775304211835
+    },
+    "crm-in-a-box": {
+      "version": "0.1.0",
+      "installedAt": 1775304227371
+    },
+    "openclaw-reminder": {
+      "version": "1.0.5",
+      "installedAt": 1775304240911
+    }
+  }
+}

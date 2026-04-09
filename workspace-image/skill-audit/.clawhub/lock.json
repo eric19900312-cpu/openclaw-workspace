@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skills": {
+    "ima-ai-image-photo-generator": {
+      "version": "1.0.0",
+      "installedAt": 1775293174311
+    },
+    "chart-image": {
+      "version": "2.6.23",
+      "installedAt": 1775293303513
+    },
+    "python-dataviz": {
+      "version": "1.0.0",
+      "installedAt": 1775293308978
+    },
+    "echarts-ai-skill": {
+      "version": "0.1.1",
+      "installedAt": 1775293324227
+    }
+  }
+}

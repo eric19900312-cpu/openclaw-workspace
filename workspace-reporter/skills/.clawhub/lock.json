@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "agentsmail": {
+      "version": "0.4.6",
+      "installedAt": 1774931677657
+    },
+    "report-generator": {
+      "version": "1.0.2",
+      "installedAt": 1774932507976
+    },
+    "markdown-to-html": {
+      "version": "1.1.0",
+      "installedAt": 1774932516713
+    },
+    "feishu-doc-manager": {
+      "version": "1.0.0",
+      "installedAt": 1774932520956
+    },
+    "md-to-pdf-cjk": {
+      "version": "1.0.0",
+      "installedAt": 1774932525608
+    },
+    "summarize-pro": {
+      "version": "1.0.0",
+      "installedAt": 1774959556660
+    }
+  }
+}

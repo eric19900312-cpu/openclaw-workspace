@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "sales-dialogue": {
+      "version": "1.0.0",
+      "installedAt": 1775290797513
+    },
+    "mlm-assistant": {
+      "version": "1.0.0",
+      "installedAt": 1775290797821
+    },
+    "lead-magnets": {
+      "version": "1.0.0",
+      "installedAt": 1775635090934
+    },
+    "skill-creator": {
+      "version": "0.1.0",
+      "installedAt": 1775640662553
+    },
+    "file-organizer-zh": {
+      "version": "1.0.0",
+      "installedAt": 1775640725619
+    }
+  }
+}

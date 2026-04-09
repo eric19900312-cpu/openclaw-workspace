@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "skills": {
+    "video-frames": {
+      "version": "1.0.0",
+      "installedAt": 1775290064612
+    },
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1775290102479
+    },
+    "market-research": {
+      "version": "1.0.1",
+      "installedAt": 1775290150397
+    },
+    "ddg-web-search": {
+      "version": "1.0.0",
+      "installedAt": 1775290382787
+    },
+    "nano-pdf": {
+      "version": "1.0.0",
+      "installedAt": 1775290383189
+    },
+    "screenshot": {
+      "version": "1.0.1",
+      "installedAt": 1775290383270
+    },
+    "dev-coding-agent": {
+      "version": "1.0.0",
+      "installedAt": 1775290767336
+    }
+  }
+}

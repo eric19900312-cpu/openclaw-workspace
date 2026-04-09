@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skills": {
+    "pandas": {
+      "version": "1.0.1",
+      "installedAt": 1775303153147
+    },
+    "python-dataviz": {
+      "version": "1.0.0",
+      "installedAt": 1775303158870
+    },
+    "csv-analyzer": {
+      "version": "1.0.0",
+      "installedAt": 1775303438662
+    },
+    "system-data-intelligence-skill": {
+      "version": "1.0.0",
+      "installedAt": 1775303444836
+    }
+  }
+}

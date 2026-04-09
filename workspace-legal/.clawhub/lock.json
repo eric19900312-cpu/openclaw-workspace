@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "ocr-local": {
+      "version": "1.0.0",
+      "installedAt": 1775294084452
+    },
+    "read-word": {
+      "version": "1.0.0",
+      "installedAt": 1775294085393
+    },
+    "pdf-ocr": {
+      "version": "1.0.0",
+      "installedAt": 1775294108628
+    },
+    "pdf-extract": {
+      "version": "1.0.0",
+      "installedAt": 1775294364272
+    },
+    "extract-pdf-text": {
+      "version": "1.0.2",
+      "installedAt": 1775294364572
+    }
+  }
+}

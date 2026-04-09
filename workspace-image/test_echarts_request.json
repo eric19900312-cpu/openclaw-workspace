@@ -1,0 +1,15 @@
+{
+  "title": "学习完成率趋势",
+  "goal": "trend",
+  "dataset": [
+    { "day": "03-01", "completionRate": 62, "targetRate": 75 },
+    { "day": "03-02", "completionRate": 68, "targetRate": 75 },
+    { "day": "03-03", "completionRate": 71, "targetRate": 75 },
+    { "day": "03-04", "completionRate": 77, "targetRate": 75 }
+  ],
+  "xField": "day",
+  "series": [
+    { "name": "完成率", "field": "completionRate" },
+    { "name": "目标", "field": "targetRate" }
+  ]
+}

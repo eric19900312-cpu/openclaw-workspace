@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenClaw 文件下载示例</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #1a1a2e;
+      color: #eee;
+    }
+    h1 { color: #00d4ff; }
+    .card {
+      background: #16213e;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+    input, button {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #0f3460;
+      color: #fff;
+      margin: 5px;
+    }
+    button {
+      background: #00d4ff;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #00a8cc; }
+    pre {
+      background: #0d1b2a;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 13px;
+    }
+    .result { margin-top: 15px; }
+    .error { color: #ff6b6b; }
+    .success { color: #51cf66; }
+    #token-input { width: 350px; }
+    #file-list { max-height: 300px; overflow-y: auto; }
+    .file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: #0f3460;
+      border-radius: 6px;
+      margin: 5px 0;
+    }
+    .file-item a {
+      color: #00d4ff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .file-item a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>📦 OpenClaw 文件下载示例</h1>
+
+  <div class="card">
+    <h3>⚙️ 配置</h3>
+    <label>Gateway URL:</label><br>
+    <input type="text" id="gateway-url" size="50" value="https://192.168.3.30:18789"><br><br>
+    <label>Token:</label><br>
+    <input type="text" id="token-input" placeholder="Bearer Token" value="22a7ec525705df7409a2eca25782246c5f7063b7a0bb252f">
+  </div>
+
+  <div class="card">
+    <h3>📂 浏览文件</h3>
+    <button onclick="listFiles()">刷新文件列表</button>
+    <button onclick="listFilesRaw()">查看目录源码</button>
+    <div id="file-list" class="result"></div>
+  </div>
+
+  <div class="card">
+    <h3>📥 下载文件</h3>
+    <input type="text" id="filename" placeholder="输入文件名，如 8.txt">
+    <button onclick="downloadFile()">下载</button>
+    <div id="download-result" class="result"></div>
+  </div>
+
+  <div class="card">
+    <h3>🔧 WSS 订阅示例（接收文件路径）</h3>
+    <button onclick="connectWSS()">连接 WSS</button>
+    <button onclick="disconnectWSS()">断开</button>
+    <div id="wss-status" class="result"></div>
+  </div>
+
+  <div class="card">
+    <h3>📋 代码示例</h3>
+    <pre>
+// ===== 1. 下载文件 =====
+async function downloadFile(filename) {
+  const token = document.getElementById('token-input').value;
+  const gateway = document.getElementById('gateway-url').value;
+  
+  const response = await fetch(
+    `${gateway}/__openclaw__/canvas/${encodeURIComponent(filename)}`,
+    {
+      headers: { 'Authorization': `Bearer ${token}` },
+      // HTTPS 自签名证书需要忽略（开发环境）
+      // 生产环境请使用有效证书
+      mode: 'cors'
+    }
+  );
+  
+  if (!response.ok) {
+    throw new Error(`下载失败: ${response.status}`);
+  }
+  
+  return await response.blob();
+}
+
+// ===== 2. WSS 订阅会话消息 =====
+function connectWSS() {
+  const gateway = document.getElementById('gateway-url').value.replace('https', 'wss');
+  const token = document.getElementById('token-input').value;
+  
+  const ws = new WebSocket(gateway);
+  
+  ws.onopen = () => {
+    // 1. 发送 connect 请求
+    ws.send(JSON.stringify({
+      type: 'req',
+      id: '1',
+      method: 'connect',
+      params: {
+        minProtocol: 3,
+        maxProtocol: 3,
+        client: { id: 'web', version: '1.0', platform: 'web', mode: 'operator' },
+        role: 'operator',
+        scopes: ['operator.read', 'operator.write'],
+        auth: { token: token },
+        locale: 'zh-CN',
+        userAgent: 'file-download-demo/1.0'
+      }
+    }));
+  };
+  
+  ws.onmessage = (event) => {
+    const msg = JSON.parse(event.data);
+    console.log('收到消息:', msg);
+    
+    // 解析 session.message 事件
+    if (msg.event === 'session.message') {
+      const messages = msg.payload?.messages || [];
+      messages.forEach(m => {
+        // 检查工具调用结果中的文件路径
+        if (m.role === 'toolResult' && m.toolName === 'write') {
+          console.log('文件已生成:', m.content);
+          // m.content 通常包含 "文件已写入: /path/to/file.txt"
+          const match = m.content.match(/写入:\s*(.+)/);
+          if (match) {
+            const filepath = match[1];
+            const filename = filepath.split('/').pop();
+            console.log('文件名:', filename);
+            // 自动下载
+            downloadFile(filename);
+          }
+        }
+      });
+    }
+  };
+  
+  // 2. 连接成功后，订阅消息
+  ws.on('open', () => {
+    // 发送订阅请求
+    ws.send(JSON.stringify({
+      type: 'req',
+      id: '2',
+      method: 'sessions.messages.subscribe',
+      params: { key: 'agent:main:telegram:direct:123' } // 替换为你的 sessionKey
+    }));
+  });
+}
+    </pre>
+  </div>
+
+  <script>
+    // ===== 配置 =====
+    let ws = null;
+
+    // ===== 文件列表 =====
+    async function listFiles() {
+      const gateway = document.getElementById('gateway-url').value;
+      const token = document.getElementById('token-input').value;
+      const result = document.getElementById('file-list');
+      
+      if (!token) {
+        result.innerHTML = '<p class="error">请先输入 Token</p>';
+        return;
+      }
+      
+      result.innerHTML = '<p>加载中...</p>';
+      
+      try {
+        // 注意：Canvas 目录列表返回的是 HTML，不是 JSON
+        const response = await fetch(`${gateway}/__openclaw__/canvas/`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const html = await response.text();
+        
+        // 简单解析 HTML 中的文件链接
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const links = doc.querySelectorAll('a');
+        
+        let files = [];
+        links.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && href !== '/' && href !== '../') {
+            files.push(href.replace('/', ''));
+          }
+        });
+        
+        if (files.length === 0) {
+          result.innerHTML = '<p>目录为空</p>';
+        } else {
+          result.innerHTML = files.map(f => `
+            <div class="file-item">
+              <span>📄 ${f}</span>
+              <a onclick="downloadAndShow('${f}')">下载</a>
+            </div>
+          `).join('');
+        }
+      } catch (err) {
+        result.innerHTML = `<p class="error">错误: ${err.message}</p>`;
+      }
+    }
+
+    // ===== 原始目录 =====
+    async function listFilesRaw() {
+      const gateway = document.getElementById('gateway-url').value;
+      const token = document.getElementById('token-input').value;
+      const result = document.getElementById('file-list');
+      
+      result.innerHTML = '<pre>加载中...</pre>';
+      
+      try {
+        const response = await fetch(`${gateway}/__openclaw__/canvas/`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const text = await response.text();
+        result.innerHTML = `<pre>${escapeHtml(text)}</pre>`;
+      } catch (err) {
+        result.innerHTML = `<p class="error">错误: ${err.message}</p>`;
+      }
+    }
+
+    // ===== 下载并预览 =====
+    async function downloadAndShow(filename) {
+      const gateway = document.getElementById('gateway-url').value;
+      const token = document.getElementById('token-input').value;
+      const result = document.getElementById('download-result');
+      
+      result.innerHTML = `<p>正在下载 ${filename}...</p>`;
+      
+      try {
+        const response = await fetch(
+          `${gateway}/__openclaw__/canvas/${encodeURIComponent(filename)}`,
+          { headers: { 'Authorization': `Bearer ${token}` } }
+        );
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        // 根据文件类型处理
+        const contentType = response.headers.get('content-type') || '';
+        
+        if (contentType.includes('text') || filename.endsWith('.txt') || filename.endsWith('.md')) {
+          const text = await response.text();
+          result.innerHTML = `<pre>${escapeHtml(text)}</pre>`;
+        } else if (contentType.includes('image')) {
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          result.innerHTML = `<img src="${url}" style="max-width:100%;border-radius:8px;">`;
+        } else {
+          // 二进制文件，提供下载链接
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          result.innerHTML = `
+            <p class="success">文件大小: ${(blob.size / 1024).toFixed(2)} KB</p>
+            <a href="${url}" download="${filename}">点击下载 ${filename}</a>
+          `;
+        }
+      } catch (err) {
+        result.innerHTML = `<p class="error">错误: ${err.message}</p>`;
+      }
+    }
+
+    // ===== 直接下载 =====
+    async function downloadFile() {
+      const filename = document.getElementById('filename').value;
+      if (!filename) {
+        alert('请输入文件名');
+        return;
+      }
+      await downloadAndShow(filename);
+    }
+
+    // ===== WSS 连接 =====
+    function connectWSS() {
+      const gateway = document.getElementById('gateway-url').value.replace('https', 'wss').replace('http', 'ws');
+      const token = document.getElementById('token-input').value;
+      const status = document.getElementById('wss-status');
+      
+      if (!token) {
+        status.innerHTML = '<p class="error">请先输入 Token</p>';
+        return;
+      }
+      
+      status.innerHTML = '<p>正在连接...</p>';
+      
+      ws = new WebSocket(gateway);
+      
+      ws.onopen = () => {
+        status.innerHTML = '<p class="success">✓ 已连接，发送认证...</p>';
+        
+        ws.send(JSON.stringify({
+          type: 'req',
+          id: '1',
+          method: 'connect',
+          params: {
+            minProtocol: 3,
+            maxProtocol: 3,
+            client: { id: 'web', version: '1.0', platform: 'web', mode: 'operator' },
+            role: 'operator',
+            scopes: ['operator.read', 'operator.write'],
+            auth: { token: token },
+            locale: 'zh-CN',
+            userAgent: 'file-download-demo/1.0'
+          }
+        }));
+      };
+      
+      ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        
+        // 连接成功
+        if (msg.payload?.type === 'hello-ok') {
+          status.innerHTML += '<p class="success">✓ 认证成功，开始订阅...</p>';
+          
+          // 订阅所有会话消息
+          ws.send(JSON.stringify({
+            type: 'req',
+            id: '2',
+            method: 'sessions.messages.subscribe',
+            params: {}  // 不指定 key，订阅所有
+          }));
+        }
+        
+        // 收到消息
+        if (msg.event === 'session.message') {
+          const msgs = msg.payload?.messages || [];
+          msgs.forEach(m => {
+            if (m.role === 'toolResult' && m.toolName === 'write') {
+              status.innerHTML += `<p class="success">📄 文件生成: ${escapeHtml(m.content)}</p>`;
+            }
+          });
+        }
+        
+        // 订阅成功
+        if (msg.id === '2' && msg.ok) {
+          status.innerHTML += '<p>✓ 订阅成功，等待文件...</p>';
+        }
+        
+        // 错误
+        if (msg.error) {
+          status.innerHTML += `<p class="error">错误: ${JSON.stringify(msg.error)}</p>`;
+        }
+      };
+      
+      ws.onerror = (err) => {
+        status.innerHTML += `<p class="error">WebSocket 错误</p>`;
+      };
+      
+      ws.onclose = () => {
+        status.innerHTML += '<p>连接已断开</p>';
+      };
+    }
+
+    function disconnectWSS() {
+      if (ws) {
+        ws.close();
+        ws = null;
+        document.getElementById('wss-status').innerHTML = '<p>已断开</p>';
+      }
+    }
+
+    // ===== 工具函数 =====
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

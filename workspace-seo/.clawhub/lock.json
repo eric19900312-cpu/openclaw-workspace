@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skills": {
+    "seo-research-master": {
+      "version": "1.0.1",
+      "installedAt": 1775300602750
+    },
+    "aso": {
+      "version": "1.0.0",
+      "installedAt": 1775300606193
+    },
+    "shopee-big-data-analytics": {
+      "version": "1.0.0",
+      "installedAt": 1775300662953
+    },
+    "keyword-rank-monitor": {
+      "version": "1.0.0",
+      "installedAt": 1775300709300
+    }
+  }
+}

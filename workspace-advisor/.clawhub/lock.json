@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skills": {
+    "a-stock-market-sentiment": {
+      "version": "1.0.0",
+      "installedAt": 1775282248340
+    },
+    "economics": {
+      "version": "1.0.0",
+      "installedAt": 1775282248716
+    },
+    "stock-recommend": {
+      "version": "1.0.0",
+      "installedAt": 1775282248991
+    },
+    "fear-and-greed-index": {
+      "version": "1.0.0",
+      "installedAt": 1775282249031
+    }
+  }
+}

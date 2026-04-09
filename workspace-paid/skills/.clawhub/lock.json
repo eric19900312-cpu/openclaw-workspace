@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skills": {
+    "chart-image": {
+      "version": "2.6.23",
+      "installedAt": 1775301244363
+    },
+    "adspirer-ads-agent": {
+      "version": "1.5.0",
+      "installedAt": 1775301413036
+    },
+    "ai-web-automation": {
+      "version": "1.0.0",
+      "installedAt": 1775301413525
+    },
+    "openclaw-google-ads": {
+      "version": "0.2.0",
+      "installedAt": 1775302370003
+    }
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-browser": {
+      "version": "0.2.0",
+      "installedAt": 1772247679355
+    },
+    "frontend-design-ultimate": {
+      "version": "1.0.0",
+      "installedAt": 1772255532880
+    },
+    "web-deploy-github": {
+      "version": "1.0.0",
+      "installedAt": 1772255578378
+    },
+    "ppt-generator": {
+      "version": "1.0.0",
+      "installedAt": 1772263666220
+    },
+    "a-stock-monitor": {
+      "version": "1.1.2",
+      "installedAt": 1772329600746
+    },
+    "stock-prices": {
+      "version": "1.0.1",
+      "installedAt": 1772329612377
+    },
+    "fundamental-stock-analysis": {
+      "version": "1.0.5",
+      "installedAt": 1772329620641
+    },
+    "sql-server-toolkit": {
+      "version": "1.0.1",
+      "installedAt": 1772417511773
+    },
+    "vision-sandbox": {
+      "version": "1.1.0",
+      "installedAt": 1772419260016
+    },
+    "computer-vision-expert": {
+      "version": "1.0.0",
+      "installedAt": 1772419275532
+    },
+    "memory-setup": {
+      "version": "1.0.0",
+      "installedAt": 1772445373937
+    },
+    "news-summary": {
+      "version": "1.0.1",
+      "installedAt": 1773122304902
+    },
+    "youtube-transcript": {
+      "version": "1.0.1",
+      "installedAt": 1773122315657
+    },
+    "us-stock-analysis": {
+      "version": "0.1.1",
+      "installedAt": 1773122361285
+    },
+    "stock-analysis-lianghua": {
+      "version": "1.0.0",
+      "installedAt": 1773122377317
+    },
+    "summarize": {
+      "version": "1.0.0",
+      "installedAt": 1773122426833
+    },
+    "zh-humanizer": {
+      "version": "1.0.0",
+      "installedAt": 1773122436818
+    },
+    "skill-creator": {
+      "version": "0.1.0",
+      "installedAt": 1773122455521
+    },
+    "desktop-control-win": {
+      "version": "1.0.1",
+      "installedAt": 1773122472053
+    },
+    "business-model-canvas": {
+      "version": "0.1.0",
+      "installedAt": 1773122686404
+    },
+    "market-analysis-cn": {
+      "version": "1.0.0",
+      "installedAt": 1773122693502
+    },
+    "startup": {
+      "version": "1.0.0",
+      "installedAt": 1773122700845
+    },
+    "architecture-designer": {
+      "version": "0.1.0",
+      "installedAt": 1773122708700
+    },
+    "business-plan": {
+      "version": "0.1.0",
+      "installedAt": 1773122716135
+    },
+    "product-manager": {
+      "version": "1.0.0",
+      "installedAt": 1773122723626
+    },
+    "find-skills-skill": {
+      "version": "1.0.0",
+      "installedAt": 1773124605867
+    },
+    "self-improving-agent": {
+      "version": "3.0.0",
+      "installedAt": 1773124646016
+    },
+    "openclaw-tavily-search": {
+      "version": "0.1.0",
+      "installedAt": 1773124789242
+    },
+    "kokoro-tts": {
+      "version": "0.1.0",
+      "installedAt": 1773129280375
+    },
+    "reddit-search-but-free": {
+      "version": "1.0.0",
+      "installedAt": 1774602365586
+    },
+    "nano-pdf": {
+      "version": "1.0.0",
+      "installedAt": 1774602373734
+    },
+    "data-visualization-2": {
+      "version": "0.1.5",
+      "installedAt": 1774602385619
+    },
+    "sendclaw-email": {
+      "version": "1.3.0",
+      "installedAt": 1774687847715
+    },
+    "agentsmail": {
+      "version": "0.4.6",
+      "installedAt": 1774688161036
+    },
+    "porteden-email": {
+      "version": "1.0.4",
+      "installedAt": 1774687864290
+    },
+    "video-frames": {
+      "version": "1.0.0",
+      "installedAt": 1774698725068
+    },
+    "xurl": {
+      "version": "1.0.0",
+      "installedAt": 1774698804265
+    },
+    "agent-team-orchestration": {
+      "version": "1.0.0",
+      "installedAt": 1775286045790
+    },
+    "prompt-engineering-expert": {
+      "version": "1.0.0",
+      "installedAt": 1775287003388
+    },
+    "rupert-data-analysis": {
+      "version": "1.0.0",
+      "installedAt": 1775290069767
+    }
+  }
+}
